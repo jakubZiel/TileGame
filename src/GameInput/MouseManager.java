@@ -48,16 +48,15 @@ public class MouseManager implements MouseListener, MouseMotionListener {
 
     @Override
     public void mouseDragged(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseMoved(MouseEvent e) {
         mouseX = e.getX();
         mouseY = e.getY();
     }
 
-    //Getters and setters
+    @Override
+    public void mouseMoved(MouseEvent e) {
+            mouseX = e.getX();
+            mouseY = e.getY();
+    }
 
     public boolean isLeftPressed() {
         return leftPressed;

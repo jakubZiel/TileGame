@@ -68,6 +68,7 @@ public class World {
         String file = Utils.loadFileAsString(path);
 
         String[] tokens = file.split("\\s+");
+
         width = Utils.parseInt(tokens[0]);
         height = Utils.parseInt(tokens[1]);
         spawnX = Utils.parseInt(tokens[2]);

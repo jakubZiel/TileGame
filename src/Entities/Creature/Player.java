@@ -3,16 +3,18 @@ package Entities.Creature;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
-
 import Entities.Attacks.Projectile.FireBall;
 import Entities.GameObject;
 import Entities.Items.Gold;
 import GamePackage.Handler;
 import Utils.DirectionVector;
+import gfx.HUD.PlayerHUD;
 import gfx.TextureProcessing.Animation;
 import gfx.TextureProcessing.Assets;
 
 public class Player extends Creature {
+
+    private int mana;
 
     private long lastAttack, attackCoolDown = 100, attackTimer = lastAttack;
     private long lastShoot, shootCooldown = 10000, shootTimer = lastShoot;
@@ -20,13 +22,16 @@ public class Player extends Creature {
     private int lootingZoneSize;
     private BufferedImage lastRenderedFrame;
 
+    public PlayerHUD hud;
+
     public Player(Handler handler, float x, float y, int health){
         super(handler, x, y, health, Creature.DEFAULT_WIDTH, Creature.DEFAULT_HEIGHT);
         setBounds(18, 32, 18, 21);
         setSpeed(2);
         setAnimations();
         setLootingRange(60);
-
+        setMana(10000);
+        hud = new PlayerHUD(handler, this);
     }
 
     @Override
@@ -51,6 +56,7 @@ public class Player extends Creature {
         attack();
         shoot();
         handler.getGame().getGameCam().centerOnEntity(this);
+        hud.tick();
     }
 
     @Override
@@ -61,6 +67,9 @@ public class Player extends Creature {
 
     private void shoot(){
 
+        if (mana<=0)
+            return;
+
         if (handler.getMouseManager().isLeftPressed()){
 
             shootTimer += System.currentTimeMillis() - lastShoot;
@@ -70,6 +79,8 @@ public class Player extends Creature {
 
             lastShoot = System.currentTimeMillis();
             shootTimer = 0;
+
+            mana-=1000;
 
             ArrayList<GameObject> entities = handler.getEntityManager().getEntities();
             entities.add(new FireBall(handler, getCenterX(), getCenterY(), 10, 10, new DirectionVector(handler.getMouseManager().getMouseX() + handler.getXOffset(),handler.getMouseManager().getMouseY() + handler.getYOffset(), getCenterX(), getCenterY()), this));
@@ -218,5 +229,13 @@ public class Player extends Creature {
 
         lootingRange = new Rectangle(getCenterX() - lootingZoneSize / 2, getCenterY() - lootingZoneSize / 2, lootingZoneSize, lootingZoneSize);
 
+    }
+
+    public int getMana() {
+        return mana;
+    }
+
+    public void setMana(int mana) {
+        this.mana = mana;
     }
 }

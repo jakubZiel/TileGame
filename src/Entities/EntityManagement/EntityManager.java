@@ -1,22 +1,15 @@
 package Entities.EntityManagement;
 
 import Entities.*;
-import Entities.Attacks.Projectile.FireBall;
-import Entities.Attacks.Projectile.Projectile;
 import Entities.Creature.Enemy;
 import Entities.Creature.Player;
 import Entities.Items.Boulder;
-import Entities.Items.Gold;
 import Entities.Items.Tree;
 import GamePackage.Handler;
-import Utils.DirectionVector;
-
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Comparator;
 
-
-//TODO add projectile handling
 
 public class EntityManager {
     private Handler handler;
@@ -39,6 +32,28 @@ public class EntityManager {
         entities = new ArrayList<>();
         this.player = player;
         addObjects();
+    }
+
+    public void tick(){
+        for (int i = 0; i < entities.size(); i++) {
+            GameObject e = entities.get(i);
+            e.tick();
+
+            if (e.shouldNotExist(entities))
+                i--;
+        }
+    }
+
+    public void render(Graphics graphics){
+        entities.sort(renderSorter);
+        for (GameObject object : entities)
+            object.render(graphics);
+
+        player.hud.render(graphics);
+    }
+
+    public void addEntity(GameObject entity){
+        entities.add(entity);
     }
 
     private void addObjects(){
@@ -65,49 +80,6 @@ public class EntityManager {
 
         addEntity(new Enemy(handler, 500, 500, 100));
         addEntity(new Enemy(handler, 100, 500, 100));
-    }
-
-    public void tick(){
-        for (int i = 0; i < entities.size(); i++) {
-            GameObject e = entities.get(i);
-            e.tick();
-            checkIfRemove(e, i);
-        }
-    }
-
-    private void checkIfRemove(GameObject e, int i){
-
-        if (e instanceof Projectile){
-            Projectile p = (Projectile) e;
-            if (!p.isAirBorne()){
-                entities.remove(e);
-                i--;
-            }
-        }
-
-        if (!e.isAlive()) {
-            if (e instanceof Enemy)
-                addEntity(new Gold(handler,e.getX(), e.getY()));
-
-            entities.remove(i);
-            i--;
-        }else if (e instanceof Gold){
-            Gold g = (Gold)e;
-            if (g.getPickedUp()) {
-                entities.remove(e);
-                i--;
-            }
-        }
-    }
-
-    public void render(Graphics graphics){
-        entities.sort(renderSorter);
-        for (GameObject object : entities)
-            object.render(graphics);
-    }
-
-    public void addEntity(GameObject entity){
-        entities.add(entity);
     }
 
     public Player getPlayer() {

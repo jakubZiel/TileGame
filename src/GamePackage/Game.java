@@ -139,6 +139,7 @@ public class Game implements Runnable {
 
     public void tick(){
         keyManager.tick();
+        mouseManager.tick();
         if(State.getState() != null) State.getState().tick();
     }   //inside gameLoop()
 

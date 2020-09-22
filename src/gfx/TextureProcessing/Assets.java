@@ -11,7 +11,7 @@ public class Assets {
     private static int width = 661/20 , height = 661/20;
 
 
-    public static BufferedImage player, dirt, grass, stone, tree, boulder, enemy , pause;
+    public static BufferedImage player, dirt, grass, stone, tree, boulder, enemy , pause ,door;
 
     public static BufferedImage[] playerDown;
     public static BufferedImage[] playerRight;
@@ -51,6 +51,7 @@ public class Assets {
         dirt = sheet.crop(0 ,17 * height, width, height);
         grass = sheet.crop(0,0, width, height);
         stone = sheet.crop(width * 3,0, width, height);
+        door = sheet.crop(width * 6, 0, width, height);
     }
 
     public static void initItemTex(){

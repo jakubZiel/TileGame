@@ -1,10 +1,12 @@
 package Entities.Items;
 
+import Entities.GameObject;
 import GamePackage.Handler;
 import gfx.TextureProcessing.Animation;
 import gfx.TextureProcessing.Assets;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 public class Gold  extends Item {
 
@@ -44,5 +46,14 @@ public class Gold  extends Item {
     @Override
     public void die() {
 
+    }
+
+    @Override
+    public boolean shouldNotExist(ArrayList<GameObject> entities) {
+        if (pickedUp) {
+            entities.remove(this);
+            return true;
+        }else
+            return false;
     }
 }

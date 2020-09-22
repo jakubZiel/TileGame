@@ -15,7 +15,7 @@ public abstract class Tile {
     public static Tile grassTile = new GrassTile(0); // 0 is grass
     public static Tile dirtTile = new DirtTile(1); // 1 is dirt
     public static Tile rockTile = new RockTile(2); // 2 is rock
-
+    public static Tile doorTile = new DoorTile(3);
 
 
     protected BufferedImage texture;

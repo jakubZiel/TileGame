@@ -1,19 +1,22 @@
 package Entities.Creature;
 
+import Entities.GameObject;
+import Entities.Items.Gold;
 import GamePackage.Handler;
 import Utils.DirectionVector;
+import gfx.HUD.HealthBar;
 import gfx.TextureProcessing.Animation;
 import gfx.TextureProcessing.Assets;
 import Utils.Drawing;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 public class Enemy extends Creature {
 
     private Rectangle territory;
     private Rectangle attackZone;
     private int attackSize;
-
 
     public Enemy(Handler handler, float x, float y, int health){
         super(handler, x, y, health, Creature.DEFAULT_WIDTH, Creature.DEFAULT_HEIGHT);
@@ -24,6 +27,7 @@ public class Enemy extends Creature {
         setSpeed(1);
         setAttackZone(attackSize);
         setAnimations();
+        healthBar = new HealthBar(this, this.handler);
     }
 
     @Override
@@ -33,7 +37,7 @@ public class Enemy extends Creature {
         drawAttackZone(graphics);
 
         graphics.drawImage(getCurrentAnimationFrame(), (int) (x - handler.getGame().getGameCam().getXOffset()), (int) (y - handler.getGame().getGameCam().getYOffset()), width, height, null);
-
+        healthBar.render(graphics);
     }
 
     private void renderTerritory(Graphics graphics){
@@ -49,7 +53,7 @@ public class Enemy extends Creature {
         move();
         attack();
         tickAttackZone();
-
+        healthBar.tick();
     }
 
     @Override
@@ -113,5 +117,16 @@ public class Enemy extends Creature {
             return downAnim.getCurrentFrame();
         else
             return Assets.monsterDown[0];
+    }
+
+    @Override
+    public boolean shouldNotExist(ArrayList<GameObject> entities){
+        if (super.shouldNotExist(entities)){
+
+            entities.add(new Gold(handler,this.getX(), this.getY()));
+
+            return true;
+        }else
+            return false;
     }
 }

@@ -1,10 +1,10 @@
 package Tiles;
 
-import java.awt.image.BufferedImage;
+import gfx.TextureProcessing.Assets;
 
 public class DoorTile extends Tile{
-    public DoorTile(BufferedImage texture, int id) {
-        super(texture, id);
+    public DoorTile(int id) {
+        super(Assets.door, id);
     }
 
     @Override

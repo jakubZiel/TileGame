@@ -6,6 +6,8 @@ import GamePackage.Handler;
 import Tiles.Tile;
 import gfx.TextureProcessing.Animation;
 
+import java.util.ArrayList;
+
 public abstract class Creature extends GameObject {
 
     public static final float DEFAULT_SPEED = 3.0f;
@@ -39,6 +41,7 @@ public abstract class Creature extends GameObject {
     }
 
     public void move(){
+
         if (!checkEntityCollision(xMove, 0f))
             moveX();
         if (!checkEntityCollision(0f, yMove))
@@ -91,6 +94,14 @@ public abstract class Creature extends GameObject {
         this.speed = speed;
     }
 
+    public boolean shouldNotExist(ArrayList<GameObject> entities){
+        if (!isAlive()){
 
+            entities.remove(this);
+            return true;
+        }else
+            return false;
+
+    }
 
 }

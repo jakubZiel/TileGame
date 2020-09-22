@@ -1,10 +1,13 @@
 package Entities.Attacks.Projectile;
 
 import Entities.Creature.Creature;
+import Entities.GameObject;
 import GamePackage.Handler;
 import Tiles.Tile;
 import Utils.DirectionVector;
 import gfx.TextureProcessing.Animation;
+
+import java.util.ArrayList;
 
 public abstract class Projectile  extends Creature {
     //TODO projectile doesnt work
@@ -108,5 +111,15 @@ public abstract class Projectile  extends Creature {
 
     public Creature getShooter() {
         return shooter;
+    }
+
+    @Override
+    public boolean shouldNotExist(ArrayList<GameObject> entities){
+
+            if (!isAirBorne()){
+                entities.remove(this);
+                return true;
+            }else
+                return false;
     }
 }

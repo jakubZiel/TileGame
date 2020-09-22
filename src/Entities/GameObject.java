@@ -2,8 +2,11 @@ package Entities;
 
 import Entities.Attacks.Projectile.Projectile;
 import GamePackage.Handler;
+import gfx.HUD.HealthBar;
 
 import java.awt.*;
+import java.util.ArrayList;
+
 
 public abstract class GameObject {
     protected float x, y;
@@ -12,9 +15,10 @@ public abstract class GameObject {
     protected int health;
     protected boolean alive;
 
+
     protected Rectangle bounds;
     protected GameObject collisionWith;
-
+    protected HealthBar healthBar;
 
     public GameObject(Handler handler, float x, float y, int width, int height){
         this.handler = handler;
@@ -27,6 +31,7 @@ public abstract class GameObject {
         health = 10;
 
         bounds = new Rectangle(0, 0, width, height);
+
     }
 
     public abstract void render(Graphics graphics);
@@ -43,6 +48,8 @@ public abstract class GameObject {
     }
 
     public boolean checkEntityCollision(float xOffset, float yOffset){
+
+
         for (GameObject object : handler.getEntityManager().getEntities())
             if(object.equals(this))
                 continue;
@@ -139,4 +146,7 @@ public abstract class GameObject {
     public int getCenterY(){
         return (int)(y + height / 2);
     }
+
+    public abstract boolean shouldNotExist(ArrayList<GameObject> entities);
+
 }

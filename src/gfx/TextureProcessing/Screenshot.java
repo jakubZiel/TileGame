@@ -9,6 +9,7 @@ import java.awt.image.ConvolveOp;
 import java.awt.image.Kernel;
 
 public class Screenshot {
+
     public static BufferedImage takeScreenShotOfFrame(JFrame frame){
 
         Rectangle frameBounds = frame.getBounds();
