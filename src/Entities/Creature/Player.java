@@ -15,7 +15,6 @@ import gfx.TextureProcessing.Assets;
 public class Player extends Creature {
 
     private int mana;
-
     private long lastAttack, attackCoolDown = 100, attackTimer = lastAttack;
     private long lastShoot, shootCooldown = 10000, shootTimer = lastShoot;
     private Rectangle attackBounds, lootingRange;
@@ -32,6 +31,8 @@ public class Player extends Creature {
         setLootingRange(60);
         setMana(10000);
         hud = new PlayerHUD(handler, this);
+
+
     }
 
     @Override

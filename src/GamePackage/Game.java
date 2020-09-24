@@ -104,7 +104,6 @@ public class Game implements Runnable {
 
     public synchronized void stop(){
         if(!running)return;
-
         running = false;
         try {
             thread.join();

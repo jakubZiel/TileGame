@@ -3,6 +3,7 @@ package GamePackage;
 import Entities.EntityManagement.EntityManager;
 import GameInput.KeyManager;
 import GameInput.MouseManager;
+import QuadTree.QuadTree;
 import WorldGenertaion.World;
 import gfx.GameCamera.GameCamera;
 
@@ -43,6 +44,10 @@ public class Handler {
 
     public EntityManager getEntityManager(){
         return getGame().getMainState().getEntityManager();
+    }
+
+    public QuadTree getQuadTreeModel(){
+        return getEntityManager().getQuadTreeModel();
     }
 
     public MouseManager getMouseManager(){

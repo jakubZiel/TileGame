@@ -6,6 +6,9 @@ import Entities.Creature.Player;
 import Entities.Items.Boulder;
 import Entities.Items.Tree;
 import GamePackage.Handler;
+import QuadTree.QuadTree;
+import Utils.MyPoint;
+
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -15,7 +18,9 @@ public class EntityManager {
     private Handler handler;
     private Player player;
     private ArrayList<GameObject> entities;
-    private Comparator<GameObject> renderSorter = new Comparator<GameObject>() {
+    private QuadTree quadTreeModel;
+
+    private Comparator<GameObject> renderSorter = new Comparator<>() {
         @Override
         public int compare(GameObject o1, GameObject o2) {
             if (o1.getY() == o2.getY())
@@ -31,17 +36,28 @@ public class EntityManager {
         this.handler = handler;
         entities = new ArrayList<>();
         this.player = player;
+        this.quadTreeModel = new QuadTree(10, new Rectangle(0, 0, this.handler.getGame().width, this.handler.getGame().height));
         addObjects();
     }
 
     public void tick(){
+        fillQuadTree();
+
         for (int i = 0; i < entities.size(); i++) {
+
             GameObject e = entities.get(i);
             e.tick();
 
             if (e.shouldNotExist(entities))
                 i--;
         }
+    }
+
+    public void fillQuadTree(){
+        quadTreeModel.clear();
+
+        for (GameObject g : entities)
+            quadTreeModel.insert(new MyPoint(g));
     }
 
     public void render(Graphics graphics){
@@ -88,5 +104,9 @@ public class EntityManager {
 
     public ArrayList<GameObject> getEntities(){
         return entities;
+    }
+
+    public QuadTree getQuadTreeModel() {
+        return quadTreeModel;
     }
 }

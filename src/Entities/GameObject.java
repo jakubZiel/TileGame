@@ -2,6 +2,8 @@ package Entities;
 
 import Entities.Attacks.Projectile.Projectile;
 import GamePackage.Handler;
+import Tiles.Tile;
+import Utils.MyPoint;
 import gfx.HUD.HealthBar;
 
 import java.awt.*;
@@ -49,25 +51,35 @@ public abstract class GameObject {
 
     public boolean checkEntityCollision(float xOffset, float yOffset){
 
+            ArrayList<Point> neighbourObjects = handler.getQuadTreeModel().allPointsInRectangle(new Rectangle((int) (x - Tile.TILE_WIDTH), (int) (y - Tile.TILE_HEIGHT), (int) (3 * Tile.TILE_WIDTH), (int) (3 * Tile.TILE_HEIGHT)));
 
-        for (GameObject object : handler.getEntityManager().getEntities())
-            if(object.equals(this))
-                continue;
-            else if (object.getCollisionBounds(0f, 0f).intersects(getCollisionBounds(xOffset, yOffset))) {
-                if (this instanceof Projectile){
-                    Projectile p = (Projectile) this;
-                    if (p.getShooter() == object)
-                        continue;
-                    else {
-                        collisionWith = object;
-                        object.hurt(10);
-                        return true;
-                    }
-                }
-                collisionWith  = object;
-                return true;
+            if (neighbourObjects == null){
+                collisionWith = null;
+                return false;
             }
 
+            for (Point object : neighbourObjects) {
+
+                MyPoint p = (MyPoint) object;
+
+                if (p.object.equals(this))
+                    continue;
+
+                if (p.object.getCollisionBounds(0f, 0f).intersects(getCollisionBounds(xOffset, yOffset))) {
+                    if (this instanceof Projectile) {
+                        Projectile projectile = (Projectile) this;
+                        if (projectile.getShooter() == p.object)
+                            continue;
+                        else {
+                            collisionWith = p.object;
+                            p.object.hurt(10);
+                            return true;
+                        }
+                    }
+                    collisionWith = p.object;
+                    return true;
+                }
+            }
 
         collisionWith = null;
         return  false;
