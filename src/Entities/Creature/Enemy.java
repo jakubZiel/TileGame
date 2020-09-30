@@ -123,7 +123,7 @@ public class Enemy extends Creature {
     public boolean shouldNotExist(ArrayList<GameObject> entities){
         if (super.shouldNotExist(entities)){
 
-            entities.add(new Gold(handler,this.getX(), this.getY()));
+            entities.add(new Gold(handler,this.getX(), this.getY(), 100));
 
             return true;
         }else

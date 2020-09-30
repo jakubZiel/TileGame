@@ -8,6 +8,7 @@ import Entities.GameObject;
 import Entities.Items.Gold;
 import GamePackage.Handler;
 import Utils.DirectionVector;
+import gfx.HUD.Inventory;
 import gfx.HUD.PlayerHUD;
 import gfx.TextureProcessing.Animation;
 import gfx.TextureProcessing.Assets;
@@ -20,6 +21,7 @@ public class Player extends Creature {
     private Rectangle attackBounds, lootingRange;
     private int lootingZoneSize;
     private BufferedImage lastRenderedFrame;
+    private Inventory inventory;
 
     public PlayerHUD hud;
 
@@ -31,8 +33,8 @@ public class Player extends Creature {
         setLootingRange(60);
         setMana(10000);
         hud = new PlayerHUD(handler, this);
-
-
+        inventory = new Inventory(this, handler);
+        inventory.addPickedUpItem(new Gold(null, 9 ,9 ,123));
     }
 
     @Override
@@ -45,6 +47,7 @@ public class Player extends Creature {
         renderLootingZone(graphics);
         renderAttackRange(graphics);
         renderAttack(graphics);
+
     }
 
     @Override
@@ -58,6 +61,7 @@ public class Player extends Creature {
         shoot();
         handler.getGame().getGameCam().centerOnEntity(this);
         hud.tick();
+        inventory.tick();
     }
 
     @Override
@@ -99,6 +103,7 @@ public class Player extends Creature {
             if (object instanceof Gold && lootingRange.intersects(object.getCollisionBounds(0f,0f))){
                 Gold gold = (Gold) object;
                 gold.setPickedUp();
+                inventory.addPickedUpItem(gold);
             }
         }
     }
@@ -238,5 +243,9 @@ public class Player extends Creature {
 
     public void setMana(int mana) {
         this.mana = mana;
+    }
+
+    public Inventory getInventory(){
+        return this.inventory;
     }
 }

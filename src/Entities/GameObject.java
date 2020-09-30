@@ -51,7 +51,8 @@ public abstract class GameObject {
 
     public boolean checkEntityCollision(float xOffset, float yOffset){
 
-            ArrayList<Point> neighbourObjects = handler.getQuadTreeModel().allPointsInRectangle(new Rectangle((int) (x - Tile.TILE_WIDTH), (int) (y - Tile.TILE_HEIGHT), (int) (3 * Tile.TILE_WIDTH), (int) (3 * Tile.TILE_HEIGHT)));
+            ArrayList<Point> neighbourObjects = handler.getQuadTreeModel().allPointsInRectangle(
+                    new Rectangle((int) (x - Tile.TILE_WIDTH), (int) (y - Tile.TILE_HEIGHT), (int) (3 * Tile.TILE_WIDTH), (int) (3 * Tile.TILE_HEIGHT)));
 
             if (neighbourObjects == null){
                 collisionWith = null;
@@ -64,10 +65,11 @@ public abstract class GameObject {
 
                 if (p.object.equals(this))
                     continue;
-
                 if (p.object.getCollisionBounds(0f, 0f).intersects(getCollisionBounds(xOffset, yOffset))) {
+
                     if (this instanceof Projectile) {
                         Projectile projectile = (Projectile) this;
+
                         if (projectile.getShooter() == p.object)
                             continue;
                         else {
@@ -89,7 +91,6 @@ public abstract class GameObject {
         health -= damage;
         if (health <= 0) {
             alive = false;
-            die();
         }
     }
 

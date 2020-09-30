@@ -19,14 +19,10 @@ public class GameState extends State {
 
     private boolean gamePaused = false;
 
-    private long pauseTimer, pauseLastTime = pauseTimer;
-    private final long pauseCooldown = 200;
-
     @Override
     public void tick() {
         checkIfPaused();
         if (!gamePaused) {
-            changeState();
             world.tick();
             entityManager.tick();
         }
@@ -52,25 +48,15 @@ public class GameState extends State {
         entityManager.getPlayer().setY(world.getSpawnY());
     }
 
-    private void changeState(){
-        if (isLeftPressed() && isRightPressed()) State.setState(handler.getGame().MenuState);
-    }
-
     private void checkIfPaused(){
 
-        pauseTimer = System.currentTimeMillis();
-        if (pauseTimer > pauseLastTime + pauseCooldown) {
-
-            if (handler.getKeyManager().getKeys()[KeyEvent.VK_P] && !gamePaused) {
-                gamePaused = true;
-                pauseBlurredScreen = Screenshot.takeScreenShotOfFrame(handler.getFrame());
-                pauseLastTime = System.currentTimeMillis();
-
-            } else if (handler.getKeyManager().getKeys()[KeyEvent.VK_P] && gamePaused) {
+            if (handler.getKeyManager().getKeys()[KeyEvent.VK_P]) {
+                if (!gamePaused) {
+                    gamePaused = true;
+                    pauseBlurredScreen = Screenshot.takeScreenShotOfFrame(handler.getFrame());
+                }
+            }else
                 gamePaused = false;
-                pauseLastTime = System.currentTimeMillis();
-            }
-        }
     }
 
     private void renderPause(Graphics graphics){

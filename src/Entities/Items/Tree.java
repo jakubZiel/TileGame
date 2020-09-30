@@ -19,6 +19,7 @@ public class Tree extends Item {
         bounds.y =   height / 2;
         bounds.height = height / 4;
         health = 500;
+        setId(2);
     }
 
     @Override

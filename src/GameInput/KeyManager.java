@@ -1,7 +1,10 @@
 package GameInput;
 
+import GamePackage.Handler;
+
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.security.Key;
 
 public class KeyManager implements KeyListener {
 
@@ -9,6 +12,8 @@ public class KeyManager implements KeyListener {
     public boolean up, down, left, right;
     public boolean attackUp , attackDown, attackLeft, attackRight;
     public boolean lootKey;
+    public Handler handler;
+
 
     public void tick(){
         up = keys[KeyEvent.VK_W];
@@ -29,18 +34,27 @@ public class KeyManager implements KeyListener {
         keys = new boolean[256];
     }
 
+
+
     @Override
     public void keyTyped(KeyEvent e) {
     }
 
     @Override
     public void keyPressed(KeyEvent e) {
-        keys[e.getKeyCode()] = true;
+        if (e.getKeyCode() == KeyEvent.VK_P || e.getKeyCode() == KeyEvent.VK_E)
+            keys[e.getKeyCode()] = !keys[e.getKeyCode()];
+        else
+            keys[e.getKeyCode()] = true;
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
-        keys[e.getKeyCode()] = false;
+
+        if (!(e.getKeyCode() == KeyEvent.VK_P || e.getKeyCode() == KeyEvent.VK_E))
+            keys[e.getKeyCode()] = false;
+
+
     }
 
     public boolean[] getKeys() {

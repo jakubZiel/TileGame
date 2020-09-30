@@ -17,6 +17,7 @@ public class Boulder extends Item {
         bounds.y =   2 * height / 5;
         bounds.height = height / 4;
         health = 1000;
+        setId(0);
     }
 
     @Override

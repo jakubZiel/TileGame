@@ -66,6 +66,7 @@ public class EntityManager {
             object.render(graphics);
 
         player.hud.render(graphics);
+        player.getInventory().render(graphics);
     }
 
     public void addEntity(GameObject entity){

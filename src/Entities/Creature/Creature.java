@@ -96,7 +96,6 @@ public abstract class Creature extends GameObject {
 
     public boolean shouldNotExist(ArrayList<GameObject> entities){
         if (!isAlive()){
-
             entities.remove(this);
             return true;
         }else

@@ -12,6 +12,7 @@ public class Assets {
 
 
     public static BufferedImage player, dirt, grass, stone, tree, boulder, enemy , pause ,door;
+    public static BufferedImage inventoryImage;
 
     public static BufferedImage[] playerDown;
     public static BufferedImage[] playerRight;
@@ -34,6 +35,8 @@ public class Assets {
     private static SpriteSheet pauseSheet;
     private static SpriteSheet goldSheet;
     private static SpriteSheet fireBallSheet;
+    private static SpriteSheet inventory;
+
 
     public static void init(){
 
@@ -43,6 +46,7 @@ public class Assets {
             initItemTex();
             initPauseGfx();
             initAttackTex();
+            initInventory();
     }
 
     public static void initTerrainTex(){
@@ -218,6 +222,13 @@ public class Assets {
         fireBall[1] = fireBallSheet.crop(W, H , W, H );
         fireBall[2] = fireBallSheet.crop(W * 2, H , W, H );
         fireBall[3] = fireBallSheet.crop(W * 3, H , W, H );
+    }
+
+    public static void initInventory(){
+
+       inventory = new SpriteSheet("/textures/inventory.png");
+
+       inventoryImage = inventory.crop(0,0, 720, 653);
 
     }
 

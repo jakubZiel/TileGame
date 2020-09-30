@@ -12,11 +12,14 @@ public class Gold  extends Item {
 
     private boolean pickedUp;
     private Animation goldAnim;
+    private int value;
 
-    public Gold(Handler handler, float x, float y){
+    public Gold(Handler handler, float x, float y, int value){
         super(handler, x, y, Item.DEFAULT_WIDTH, Item.DEFAULT_HEIGHT);
         pickedUp = false;
         goldAnim = new Animation(Assets.goldImages, 150);
+        this.count = value;
+        setId(1);
     }
 
     @Override
