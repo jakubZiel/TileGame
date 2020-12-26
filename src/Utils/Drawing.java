@@ -1,6 +1,6 @@
 package Utils;
 
-import GamePackage.Handler;
+import model.GamePackage.Handler;
 
 import java.awt.*;
 

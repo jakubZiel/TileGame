@@ -17,5 +17,14 @@
       </library>
     </orderEntry>
     <orderEntry type="library" name="QuadTree" level="project" />
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="file://$MODULE_DIR$/res/worlds" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
   </component>
 </module>

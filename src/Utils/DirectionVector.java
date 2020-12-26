@@ -1,6 +1,6 @@
 package Utils;
 
-import Entities.GameObject;
+import model.Entities.GameObject;
 
 public class DirectionVector {
 
@@ -8,7 +8,6 @@ public class DirectionVector {
     public float yDirection;
 
     public DirectionVector(GameObject enemy, GameObject player){
-
         setDirectionVector(enemy, player);
     }
 
@@ -38,7 +37,6 @@ public class DirectionVector {
         xDirection /= length;
         yDirection /= length;
     }
-
 
     public static float getDistance(float x1, float y1, float x2, float y2){
         return (float) Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2));

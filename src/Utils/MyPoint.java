@@ -1,6 +1,6 @@
 package Utils;
 
-import Entities.GameObject;
+import model.Entities.GameObject;
 
 import java.awt.*;
 

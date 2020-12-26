@@ -27,7 +27,6 @@ public class Utils {
             BufferedReader bReader = new BufferedReader(new FileReader(path));
 
             while ( (line = bReader.readLine()) != null) result.append(line + "\n");
-
             bReader.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
